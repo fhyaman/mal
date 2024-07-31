@@ -1,0 +1,13 @@
+{
+  "name": "mal",
+  "version": "1.0.0",
+  "description": "A make a lisp implementation in javascript",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Franklin AGBIKOSSI",
+  "license": "ISC",
+  "dependencies": {
+    "readline": "^1.3.0"
+  }
+}
