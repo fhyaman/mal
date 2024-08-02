@@ -61,8 +61,6 @@ function read_str(str){
 function tokenize(str){
  re =/[\s,]*(~@|[\[\]{}()'`~^@]|"(?:\\.|[^\\"])*"?|;.*|[^\s\[\]{}('"`,;)]*)/g
    const result =str.match(re).map((s) => s.replaceAll(',',' ')).map((s) => s.trim()).filter((s) => s !== "");
-   console.log(str.match(re))
-   console.log(result)
  return result;
 }
 
@@ -92,7 +90,7 @@ function read_list(reader){
 		 
 		list.push(read_form(reader));
 	}
-	console.log(list)
+//  	console.log(list)
 	return list ;
 }
 
@@ -105,6 +103,7 @@ function read_atom(reader){
 	    return atom;
 
 	[atom, rest] = read_integer(lookAhead);
+// 	console.log(atom, rest)
 	if (atom !== null && atom !== NaN)
 		return atom;
 		
@@ -155,20 +154,26 @@ function read_integer(str){
 	let num = '';
 	
 	const numbersChars = ['0', '1','2','3','4','5','6','7','8','9']
-	
-	for (const char of str){
+// 	console.log(str)
+	const negative = str[0] === '-';
+// 	 console.log("negative", negative)
+	 const chars= negative ? str.slice(1) : str;
+// 	 console.log("chars", chars)
+	 
+	for (const char of  chars ){
 		if (numbersChars.includes(char))
 			num+= char;
 		else
 			break;
 	}
 	
-	const rest = str.slice(num.length)
-	
 	if( num.length === 0)
 		return [null, str]
-	
-	return [parseInt(num), rest]
+	if ( negative && num.length > 0){
+		return [ -parseInt(num),str.slice(num.length) ] 
+	}
+		
+	return [parseInt(num), str.slice(num.length)]
 }
 
 
